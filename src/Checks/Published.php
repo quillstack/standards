@@ -63,7 +63,12 @@ final class Published implements Check
             )];
         }
 
-        if (in_array($tag, $published, true)) {
+        // A registry may or may not keep the `v`: this project tags `v0.6.0` and Packagist
+        // reports some of them as `0.6.0`. They are the same release, and reporting them as a
+        // missing one would make this check noise.
+        $normalise = static fn (string $version): string => ltrim($version, 'vV');
+
+        if (in_array($normalise($tag), array_map($normalise, $published), true)) {
             return [Finding::passed($this->name(), "{$tag} is on Packagist")];
         }
 
