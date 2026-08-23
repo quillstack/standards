@@ -1,5 +1,18 @@
 # Quillstack Standards
 
+[![Tests](https://github.com/quillstack/standards/actions/workflows/tests.yml/badge.svg)](https://github.com/quillstack/standards/actions/workflows/tests.yml)
+[![Latest Version](https://img.shields.io/packagist/v/quillstack/standards.svg)](https://packagist.org/packages/quillstack/standards)
+[![Downloads](https://img.shields.io/packagist/dt/quillstack/standards.svg)](https://packagist.org/packages/quillstack/standards)
+[![PHP Version](https://img.shields.io/packagist/php-v/quillstack/standards)](https://packagist.org/packages/quillstack/standards)
+[![StyleCI](https://github.styleci.io/repos/1344143079/shield?branch=main)](https://github.styleci.io/repos/1344143079?branch=main)
+[![CodeFactor](https://www.codefactor.io/repository/github/quillstack/standards/badge)](https://www.codefactor.io/repository/github/quillstack/standards)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=quillstack_standards&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=quillstack_standards)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=quillstack_standards&metric=coverage)](https://sonarcloud.io/summary/new_code?id=quillstack_standards)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=quillstack_standards&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_standards)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=quillstack_standards&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_standards)
+[![Security](https://sonarcloud.io/api/project_badges/measure?project=quillstack_standards&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_standards)
+[![License](https://img.shields.io/packagist/l/quillstack/standards)](https://github.com/quillstack/standards/blob/main/LICENSE)
+
 Checks a package against the shape every Quillstack package takes: the README, the badges, the
 manifest, the workflow, the quality gate. The rules are language-neutral data; this is the
 reader for them.
