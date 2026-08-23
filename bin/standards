@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $autoload) {
+    if (is_file($autoload)) {
+        require $autoload;
+
+        break;
+    }
+}
+
+use Quillstack\Cli\ConsoleKernel;
+use Quillstack\Cli\Input;
+use Quillstack\DI\Container;
+use Quillstack\Output\Output;
+use Quillstack\Standards\Commands\CheckCommand;
+
+$output = new Output();
+$kernel = new ConsoleKernel(new Container(), $output);
+$kernel->add(CheckCommand::class);
+
+exit($kernel->run(Input::fromArgv($_SERVER['argv'] ?? [])));

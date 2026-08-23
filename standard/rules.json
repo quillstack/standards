@@ -1,0 +1,128 @@
+{
+    "version": 1,
+    "about": "The shape every Quillstack package takes, in whatever language it is written. Rules marked universal hold everywhere; the rest name the ecosystem they belong to.",
+    "readme": {
+        "scope": "universal",
+        "sections": [
+            {
+                "title": "Why this exists",
+                "required": true
+            },
+            {
+                "title": "Requirements",
+                "required": true
+            },
+            {
+                "title": "Installation",
+                "required": true
+            },
+            {
+                "title": "Usage",
+                "required": true
+            },
+            {
+                "title": "Benchmark",
+                "required": false
+            },
+            {
+                "title": "Tests",
+                "required": true
+            },
+            {
+                "title": "The rest of Quillstack",
+                "required": true
+            },
+            {
+                "title": "License",
+                "required": true
+            }
+        ],
+        "ordered": true,
+        "firstHeadingIsTitle": true,
+        "rendering": {
+            "noInlineBeforeLinkAcrossLineBreak": true,
+            "note": "An inline element at the end of a line with a link starting the next renders with the space between them missing: `**with**` and `[a link]` come out as `witha link`."
+        }
+    },
+    "badges": {
+        "scope": "universal",
+        "required": [
+            "tests",
+            "version",
+            "downloads",
+            "language-version",
+            "styleci",
+            "codefactor",
+            "sonar-quality-gate",
+            "sonar-coverage",
+            "sonar-maintainability",
+            "sonar-reliability",
+            "sonar-security",
+            "license"
+        ],
+        "mustRender": true,
+        "note": "A badge that 404s is worse than no badge. Each is fetched, not eyeballed."
+    },
+    "repository": {
+        "scope": "universal",
+        "descriptionMatchesManifest": true,
+        "homepage": "https://quillstack.org/packages/{name}",
+        "topics": {
+            "minimum": 5,
+            "mustInclude": [
+                "quillstack"
+            ]
+        }
+    },
+    "ci": {
+        "scope": "universal",
+        "actionsPinnedToCommit": true,
+        "versionCommentRequired": true,
+        "note": "A tag is a pointer its owner can move. The comment is what Dependabot reads, so it has to be true."
+    },
+    "documentation": {
+        "scope": "universal",
+        "generatedFromReadme": true,
+        "registeredOnSite": true,
+        "note": "The page is built from the README. There is no second copy to keep in step."
+    },
+    "quality": {
+        "scope": "universal",
+        "sonarProjectKey": "quillstack_{name}",
+        "sonarMainBranch": "main",
+        "sonarNewCodePeriodSet": true,
+        "note": "A project imported before its first analysis is created with `master` as the main branch, and without a new code period the quality gate is never computed. Both have been missed five times by hand."
+    },
+    "releasing": {
+        "scope": "universal",
+        "verifyBeforeTagging": true,
+        "tagsAreImmutable": true,
+        "minorIsBreakingInZeroX": true
+    },
+    "php": {
+        "scope": "php",
+        "manifest": "composer.json",
+        "requiredScripts": [
+            "test",
+            "test:coverage",
+            "stan"
+        ],
+        "branchAlias": true,
+        "files": [
+            ".github/workflows/tests.yml",
+            ".github/dependabot.yml",
+            ".gitignore",
+            ".styleci.yml",
+            "phpstan.neon",
+            "sonar-project.properties",
+            "LICENSE",
+            "README.md"
+        ],
+        "minimumVersion": "8.1"
+    },
+    "python": {
+        "scope": "python",
+        "manifest": "pyproject.toml",
+        "note": "Filled in when the Python side exists. The universal rules above already apply to it."
+    }
+}

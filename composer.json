@@ -1,0 +1,48 @@
+{
+    "name": "quillstack/standards",
+    "description": "Checks a Quillstack package against the shape every one of them takes: the README, the badges, the repository, the release. Rules are language-neutral data; this is the reader for them.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "standards",
+        "conventions",
+        "linter",
+        "static-analysis",
+        "quillstack",
+        "php8"
+    ],
+    "homepage": "https://quillstack.org/packages/standards",
+    "authors": [
+        {
+            "name": "Radek Ziemniewicz",
+            "email": "radek@quillstack.org"
+        }
+    ],
+    "bin": ["bin/standards"],
+    "require": {
+        "ext-json": "*",
+        "php": "^8.1",
+        "quillstack/cli": "^0.6",
+        "quillstack/output": "^0.6"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "quillstack/unit-tests": "^0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quillstack\\Standards\\": "src/",
+            "Quillstack\\Standards\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "unit-tests",
+        "test:coverage": "phpdbg -qrr ./vendor/bin/unit-tests",
+        "stan": "phpstan analyse"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.6.x-dev"
+        }
+    }
+}

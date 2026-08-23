@@ -1,0 +1,6 @@
+name: Tests
+
+jobs:
+  tests:
+    steps:
+      - uses: actions/checkout@v4
