@@ -8,6 +8,7 @@ use Quillstack\Standards\Checks\Badges;
 use Quillstack\Standards\Checks\Check;
 use Quillstack\Standards\Checks\Manifest;
 use Quillstack\Standards\Checks\PinnedActions;
+use Quillstack\Standards\Checks\Published;
 use Quillstack\Standards\Checks\Quality;
 use Quillstack\Standards\Checks\ReadmeSections;
 use Quillstack\Standards\Checks\Rendering;
@@ -58,6 +59,7 @@ final class Standard
             ),
             new PinnedActions(),
             new Rendering(),
+            new Published($online),
             new Quality(
                 $this->string('quality.sonarProjectKey'),
                 $this->string('quality.sonarMainBranch', 'main'),

@@ -237,6 +237,18 @@ curl -s "https://repo.packagist.org/p2/quillstack/<name>.json?$(date +%s)" | gre
 Cache-bust that URL; Packagist's metadata CDN holds for about 15 minutes and will happily tell
 you the version does not exist.
 
+**Tagging is not publishing.** Packagist hears about a tag through a webhook, and a webhook can
+fail: one on this project answered `500`, so a release looked done — green CI, tag on GitHub —
+and nobody could install it. It went unnoticed long enough for the next release to be missing
+too. `standards check --online` checks this now; where it fails, look at the repository's
+webhook deliveries and redeliver the one that failed:
+
+```shell
+gh api repos/quillstack/<name>/hooks --jq '.[] | select(.config.url | contains("packagist")) | .id'
+gh api "repos/quillstack/<name>/hooks/<id>/deliveries" --jq '.[] | "\(.delivered_at) \(.status_code)"'
+gh api -X POST "repos/quillstack/<name>/hooks/<id>/deliveries/<delivery>/attempts"
+```
+
 ## 9. Verifying a release properly
 
 Green tests are not proof the package works — they run against the working tree. Install the

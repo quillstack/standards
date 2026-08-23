@@ -97,7 +97,10 @@
         "scope": "universal",
         "verifyBeforeTagging": true,
         "tagsAreImmutable": true,
-        "minorIsBreakingInZeroX": true
+        "minorIsBreakingInZeroX": true,
+        "newestTagIsPublished": true,
+        "registry": "https://repo.packagist.org/p2/{name}.json",
+        "note": "Tagging is not publishing: a registry hears about a tag through a webhook, and a webhook can fail. One did here and answered 500, so a release looked done \u2014 green CI, tag on GitHub \u2014 and nobody could install it. It went unnoticed long enough for the next release to be missing too."
     },
     "php": {
         "scope": "php",

@@ -81,6 +81,7 @@ The questions only a service can answer are behind a flag:
 
 ```text
   ok   badges          12 badges, all answering
+  ok   published       v0.6.1 is on Packagist
   ok   quality gate    `quillstack_dotenv-expand` on `main`, gate ok
 ```
 
@@ -103,6 +104,22 @@ unconfigured service — so each one is fetched rather than eyeballed.
 | pinned actions | Every action pinned to a commit, with the version in a comment beside it. |
 | rendering | Markdown which reads correctly and renders wrongly. |
 | quality gate | The Sonar key matches the package, and with `--online` that the main branch is right and the gate is computed at all. |
+| published | With `--online`, that the newest tag here is one Packagist actually has. |
+
+### The published one
+
+Tagging is not publishing. Packagist hears about a tag through a webhook, and a webhook can
+fail — one did on this project and answered `500`, so a release looked done: green CI, tag on
+GitHub, nothing installable. It went unnoticed long enough for the *next* release to be missing
+as well.
+
+```text
+FAIL published       `v0.8.0` is tagged here and Packagist's newest is `v0.6.0`.
+                     Tagging is not publishing. Check the Packagist webhook on the
+                     repository for a delivery that failed, and redeliver it.
+```
+
+Nothing on your machine can tell you that, which is the whole reason it is a check.
 
 ### The rendering one
 
