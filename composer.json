@@ -18,11 +18,14 @@
             "email": "radek@quillstack.org"
         }
     ],
-    "bin": ["bin/standards"],
+    "bin": [
+        "bin/standards"
+    ],
     "require": {
         "ext-json": "*",
         "php": "^8.1",
         "quillstack/cli": "^0.6",
+        "quillstack/di": "^0.6",
         "quillstack/output": "^0.6"
     },
     "require-dev": {
