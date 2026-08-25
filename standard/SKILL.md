@@ -258,6 +258,27 @@ gh api "repos/quillstack/<name>/hooks/<id>/deliveries" --jq '.[] | "\(.delivered
 gh api -X POST "repos/quillstack/<name>/hooks/<id>/deliveries/<delivery>/attempts"
 ```
 
+### A brand-new SonarCloud project
+
+Two things go wrong the first time, and both look like something is misconfigured when nothing
+is:
+
+- **The main branch may be called `master`.** SonarCloud picks a name when it creates the
+  project, and the badge reads whatever it decided is main — so an analysed `main` sits beside
+  an empty `master`, and the badge says nothing. Rename it in the project's administration.
+- **The quality gate is not computed until the second analysis.** The gate has conditions on new
+  code, new code is a difference from a baseline, and the first analysis is the baseline. One
+  analysis therefore produces `QUALITY GATE NOT COMPUTED`, which reads like a broken setup and
+  is not one. Run the workflow again; `new_lines` appears, the gate computes, and the badge
+  answers. Nothing to configure.
+
+Checked with the API rather than by eye:
+
+```shell
+curl -s "https://sonarcloud.io/api/project_branches/list?project=quillstack_<name>"
+curl -s "https://sonarcloud.io/api/measures/component?component=quillstack_<name>&metricKeys=alert_status,new_lines"
+```
+
 ## 9. Verifying a release properly
 
 Green tests are not proof the package works — they run against the working tree. Install the
