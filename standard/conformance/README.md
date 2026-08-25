@@ -17,10 +17,16 @@ which checks must fail on it and why. Every checker runs all of them and must ag
 ```
 <case>/
     expected.json      what a checker must find
-    composer.json      or pyproject.toml, or whatever the ecosystem uses
+    composer.json      \  a universal case carries every manifest, because a checker
+    pyproject.toml     /  which cannot load the package cannot check it
     README.md
     …
 ```
+
+A universal case carries a manifest for **every** ecosystem, describing the same package. This
+is not tidiness: the first version of these cases shipped only `composer.json`, and the Python
+checker could not open them at all. That was found by writing the second checker, which is what
+a second implementation is for.
 
 `expected.json` lists, per check, the statuses a conforming checker produces:
 
@@ -41,3 +47,11 @@ and that is what has to agree.
 
 `scope` says which checkers a case applies to. A case about `composer.json` scripts is `php`; a
 case about README sections is `universal` and every checker runs it.
+
+Some cases which look universal are not. **What badges a README must carry is a universal rule;
+what a badge URL looks like is not** — a PHP package points at Packagist and a Python one at
+PyPI. So a case whose README carries real badges is scoped to the ecosystem whose badges those
+are, and each ecosystem has its own.
+
+A case only declares the checks it is about. `expected.json` naming `readme sections` and
+nothing else says nothing about the badges, and a checker running it compares that one check.

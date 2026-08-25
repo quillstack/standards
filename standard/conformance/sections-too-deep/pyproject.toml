@@ -1,0 +1,6 @@
+[project]
+name = "quillstack-example"
+version = "0.1.0"
+description = "The same package this case's composer.json describes, for a checker that reads this instead."
+readme = "README.md"
+requires-python = ">=3.11"

@@ -48,7 +48,10 @@ final class Standard
                 (bool) $this->at('readme.firstHeadingIsTitle', true)
             ),
             new Badges(
-                $this->strings('badges.required'),
+                // The universal list, plus what only this ecosystem has. StyleCI checks PHP
+                // style and has nothing to say about Python, so it is named here rather than
+                // in the list every checker reads as its own.
+                array_merge($this->strings('badges.required'), $this->strings('php.badges')),
                 (bool) $this->at('badges.mustRender', true),
                 $online
             ),

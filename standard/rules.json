@@ -58,7 +58,6 @@
             "version",
             "downloads",
             "language-version",
-            "styleci",
             "codefactor",
             "sonar-quality-gate",
             "sonar-coverage",
@@ -68,7 +67,7 @@
             "license"
         ],
         "mustRender": true,
-        "note": "A badge that 404s is worse than no badge. Each is fetched, not eyeballed."
+        "note": "A badge that 404s is worse than no badge. Each is fetched, not eyeballed. The list is what every ecosystem carries. A service which exists for one language only is named in that language's section instead: StyleCI checks PHP style and has nothing to say about Python, so it is not here."
     },
     "repository": {
         "scope": "universal",
@@ -128,11 +127,15 @@
             "LICENSE",
             "README.md"
         ],
-        "minimumVersion": "8.1"
+        "minimumVersion": "8.1",
+        "badges": [
+            "styleci"
+        ]
     },
     "python": {
         "scope": "python",
         "manifest": "pyproject.toml",
-        "note": "Filled in when the Python side exists. The universal rules above already apply to it."
+        "note": "Filled in as the Python side is built. The universal rules above already apply to it. No style badge yet: ruff is the formatter and linter, and it runs in CI rather than as a service with a shield.",
+        "badges": []
     }
 }

@@ -1,12 +1,24 @@
 {
-    "about": "A package which follows the standard. Nothing may be objected to.",
-    "scope": "universal",
+    "about": "A package which follows the standard. Nothing may be objected to. Scoped to PHP: its badges point at Packagist, and what a badge URL looks like is the ecosystem's business even though the list of required badges is not.",
+    "scope": "php",
     "checks": {
-        "readme sections": {"failures": 0},
-        "badges": {"failures": 0},
-        "rendering": {"failures": 0},
-        "manifest": {"failures": 0},
-        "pinned actions": {"failures": 0},
-        "quality gate": {"failures": 0}
+        "readme sections": {
+            "failures": 0
+        },
+        "badges": {
+            "failures": 0
+        },
+        "rendering": {
+            "failures": 0
+        },
+        "manifest": {
+            "failures": 0
+        },
+        "pinned actions": {
+            "failures": 0
+        },
+        "quality gate": {
+            "failures": 0
+        }
     }
 }

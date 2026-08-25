@@ -1,6 +1,6 @@
 {
-    "about": "A README missing one of the required badges.",
-    "scope": "universal",
+    "about": "A README missing one of the required badges. Scoped to PHP: its badges point at Packagist, and what a badge URL looks like is the ecosystem's business even though the list of required badges is not.",
+    "scope": "php",
     "checks": {
         "badges": {
             "failures": 1
