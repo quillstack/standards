@@ -1,0 +1,9 @@
+{
+    "about": "A required README section written at three hashes instead of two. A checker must object, and say it is at the wrong level rather than missing.",
+    "scope": "universal",
+    "checks": {
+        "readme sections": {
+            "failures": 1
+        }
+    }
+}

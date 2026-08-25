@@ -16,8 +16,11 @@ final class ReadmeSections implements Check
     /**
      * @param array<int, array{title: string, required: bool, satisfiedBy?: array<string, string>}> $sections
      */
-    public function __construct(private readonly array $sections, private readonly bool $ordered)
-    {
+    public function __construct(
+        private readonly array $sections,
+        private readonly bool $ordered,
+        private readonly bool $firstHeadingIsTitle = true
+    ) {
         //
     }
 
@@ -62,7 +65,7 @@ final class ReadmeSections implements Check
         $findings = $this->missing($found, $deeper, is_string($type) ? $type : 'library');
         $findings = array_merge($findings, $this->outOfOrder($found));
 
-        if (!preg_match('/^#\s+\S/m', $readme)) {
+        if ($this->firstHeadingIsTitle && !preg_match('/^#\s+\S/m', $readme)) {
             $findings[] = Finding::failed(
                 $this->name(),
                 'The README does not open with a `# Title`.'

@@ -44,7 +44,8 @@ final class Standard
         return [
             new ReadmeSections(
                 $this->sections(),
-                (bool) $this->at('readme.ordered', true)
+                (bool) $this->at('readme.ordered', true),
+                (bool) $this->at('readme.firstHeadingIsTitle', true)
             ),
             new Badges(
                 $this->strings('badges.required'),
@@ -58,7 +59,9 @@ final class Standard
                 $this->strings('php.files')
             ),
             new PinnedActions(),
-            new Rendering(),
+            new Rendering(
+                (bool) $this->at('readme.rendering.noInlineBeforeLinkAcrossLineBreak', true)
+            ),
             new Published($online),
             new Quality(
                 $this->string('quality.sonarProjectKey'),

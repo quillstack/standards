@@ -1,0 +1,9 @@
+{
+    "about": "A README missing one of the required badges.",
+    "scope": "universal",
+    "checks": {
+        "badges": {
+            "failures": 1
+        }
+    }
+}

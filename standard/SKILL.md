@@ -17,6 +17,16 @@ repository metadata, the same release discipline. Where a rule belongs to one ec
 so. The machine-readable form of all of it is `standard/rules.json` in `quillstack/standards`,
 which every language's checker reads — one file, so a rule cannot disagree with itself.
 
+**Every language gets its own checker.** Not a translation of the PHP one: a Python package is
+checked by something you `pip install`, because asking for PHP to check Python would make Python
+the guest. What is shared is the rules file, not the code.
+
+Two implementations of one rule book drift — not in what the rules say, which is a single file,
+but in how each reads them. `standard/conformance` is what stops that: small packages, each with
+an `expected.json` saying what a checker must object to and how many times. Every checker runs
+all of them and must agree. The count is the contract and the wording is not, because the
+wording is each checker's own business.
+
 **Do not check any of this by hand.** Run it:
 
 ```shell

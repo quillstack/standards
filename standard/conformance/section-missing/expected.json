@@ -1,0 +1,9 @@
+{
+    "about": "A README with no Tests section at all. A checker must object that it is missing, not that it is at the wrong level.",
+    "scope": "universal",
+    "checks": {
+        "readme sections": {
+            "failures": 1
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "about": "A README whose sections are all present and in the wrong order.",
+    "scope": "universal",
+    "checks": {
+        "readme sections": {
+            "failures": 1
+        }
+    }
+}

@@ -19,6 +19,11 @@ use Quillstack\Standards\Package;
  */
 final class Rendering implements Check
 {
+    public function __construct(private readonly bool $enabled = true)
+    {
+        //
+    }
+
     public function name(): string
     {
         return 'rendering';
@@ -34,6 +39,10 @@ final class Rendering implements Check
      */
     public function run(Package $package): array
     {
+        if (!$this->enabled) {
+            return [Finding::passed($this->name(), 'not checked')];
+        }
+
         $lines = explode("\n", $package->read('README.md'));
         $findings = [];
         $inCode = false;
