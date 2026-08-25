@@ -122,4 +122,36 @@ class TestManifestAndBadges
 
         $this->assertEqual->equal(0, $this->failures($this->manifest()->run($here)));
     }
+
+    /**
+     * An alias ahead of the tags is the release being prepared: it is bumped in the commit
+     * before the tag exists, and a check which called that an error would be red for the whole
+     * of every release. Behind is the defect.
+     */
+    public function anAliasAheadOfTheTagsIsTheOneBeingPrepared()
+    {
+        $ahead = [self::class, 'aheadAndBehind'];
+
+        $this->assertEqual->equal([true, false], $ahead());
+    }
+
+    /**
+     * @return array{0: bool, 1: bool}
+     */
+    public static function aheadAndBehind(): array
+    {
+        $manifest = new Manifest('https://quillstack.org/packages/{name}', [], true, []);
+        $method = new \ReflectionMethod($manifest, 'asNumbers');
+
+        /** @var array{0: int, 1: int} $prepared */
+        $prepared = $method->invoke(null, '0.7.x-dev');
+        /** @var array{0: int, 1: int} $tagged */
+        $tagged = $method->invoke(null, '0.6.x-dev');
+        /** @var array{0: int, 1: int} $stale */
+        $stale = $method->invoke(null, '0.9.x-dev');
+        /** @var array{0: int, 1: int} $line */
+        $line = $method->invoke(null, '0.13.x-dev');
+
+        return [$prepared >= $tagged, $stale >= $line];
+    }
 }

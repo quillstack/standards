@@ -114,18 +114,35 @@ final class Manifest implements Check
             return [];
         }
 
-        $line = implode('.', array_slice(explode('.', ltrim($tag, 'vV')), 0, 2));
-        $expected = "{$line}.x-dev";
+        $line = array_slice(explode('.', ltrim($tag, 'vV')), 0, 2);
+        $expected = implode('.', $line) . '.x-dev';
 
-        if ($alias === $expected) {
+        // The alias may be ahead of the tags: `dev-main` is the release being prepared, and
+        // the alias is bumped in the commit before the tag exists. Behind is the defect — that
+        // is a development branch Composer places in a range nobody is asking for.
+        if (self::asNumbers($alias) >= self::asNumbers($expected)) {
             return [];
         }
 
         return [Finding::failed(
             $this->name(),
             "The branch alias is `{$alias}`, and the newest tag is `{$tag}`.",
-            "Composer reads the alias to decide what `dev-main` is, so it wants `{$expected}`."
+            "Composer reads the alias to decide what `dev-main` is, so it wants `{$expected}` "
+            . 'or the line being prepared.'
         )];
+    }
+
+    /**
+     * A `0.13.x-dev` read as something two numbers can be compared by, so `0.9` does not come
+     * after `0.13` the way it does alphabetically.
+     *
+     * @return array{0: int, 1: int}
+     */
+    private static function asNumbers(string $alias): array
+    {
+        $parts = explode('.', $alias);
+
+        return [(int) $parts[0], (int) ($parts[1] ?? 0)];
     }
 
     /**
