@@ -136,6 +136,21 @@
         "scope": "python",
         "manifest": "pyproject.toml",
         "note": "Filled in as the Python side is built. The universal rules above already apply to it. No style badge yet: ruff is the formatter and linter, and it runs in CI rather than as a service with a shield.",
-        "badges": []
+        "badges": [],
+        "classifiers": {
+            "required": [
+                "License :: OSI Approved :: MIT License",
+                "Programming Language :: Python :: 3",
+                "Typing :: Typed"
+            ],
+            "perVersion": "Programming Language :: Python :: {version}",
+            "note": "A distribution with no classifiers renders a `python` badge reading `missing`, because shields.io reads the classifiers rather than `requires-python`. One version classifier per supported version."
+        },
+        "requiredFiles": [
+            "README.md",
+            "LICENSE",
+            "py.typed"
+        ],
+        "requiredScripts": []
     }
 }
