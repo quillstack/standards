@@ -68,12 +68,8 @@ final class Manifest implements Check
 
         $extra = is_array($manifest['extra'] ?? null) ? $manifest['extra'] : [];
 
-        if ($this->branchAlias && !isset($extra['branch-alias'])) {
-            $findings[] = Finding::failed(
-                $this->name(),
-                'There is no branch alias.',
-                'Without one Composer cannot place the development branch in a version range.'
-            );
+        if ($this->branchAlias) {
+            $findings = array_merge($findings, $this->alias($package, $extra));
         }
 
         foreach ($this->requiredFiles as $file) {
@@ -85,5 +81,66 @@ final class Manifest implements Check
         return $findings === []
             ? [Finding::passed($this->name(), 'homepage, description, scripts, alias and files all present')]
             : $findings;
+    }
+
+    /**
+     * The alias has to name the line the tags are on.
+     *
+     * Checking only that one is there let fifteen packages carry `0.6.x-dev` while their tags
+     * had moved on as far as `0.13.0`. Composer reads the alias to decide what version the
+     * development branch is, so a stale one puts `dev-main` in a range nobody is asking for,
+     * and it does so quietly.
+     *
+     * @param array<string, mixed> $extra
+     *
+     * @return Finding[]
+     */
+    private function alias(Package $package, array $extra): array
+    {
+        $aliases = is_array($extra['branch-alias'] ?? null) ? $extra['branch-alias'] : [];
+        $alias = $aliases['dev-main'] ?? null;
+
+        if (!is_string($alias)) {
+            return [Finding::failed(
+                $this->name(),
+                'There is no branch alias.',
+                'Without one Composer cannot place the development branch in a version range.'
+            )];
+        }
+
+        $tag = self::newestTag($package);
+
+        if ($tag === null) {
+            return [];
+        }
+
+        $line = implode('.', array_slice(explode('.', ltrim($tag, 'vV')), 0, 2));
+        $expected = "{$line}.x-dev";
+
+        if ($alias === $expected) {
+            return [];
+        }
+
+        return [Finding::failed(
+            $this->name(),
+            "The branch alias is `{$alias}`, and the newest tag is `{$tag}`.",
+            "Composer reads the alias to decide what `dev-main` is, so it wants `{$expected}`."
+        )];
+    }
+
+    /**
+     * The newest tag here, by version rather than by name — `v0.9.1` sorts after `v0.13.0`
+     * alphabetically and before it in every way that matters.
+     */
+    private static function newestTag(Package $package): ?string
+    {
+        if (!is_dir($package->path . '/.git')) {
+            return null;
+        }
+
+        $command = sprintf('git -C %s tag --sort=-v:refname 2>/dev/null', escapeshellarg($package->path));
+        $tags = array_filter(explode("\n", (string) shell_exec($command)));
+
+        return $tags === [] ? null : trim((string) reset($tags));
     }
 }

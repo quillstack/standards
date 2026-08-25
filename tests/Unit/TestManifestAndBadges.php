@@ -107,4 +107,19 @@ class TestManifestAndBadges
 
         $this->assertEqual->equal(0, $this->failures($findings));
     }
+
+    /**
+     * The alias has to name the line the tags are on, which is checked against this package's
+     * own repository because that is where there are real tags to be wrong about.
+     *
+     * Checking only that an alias existed let fifteen packages carry `0.6.x-dev` while their
+     * tags had reached `0.13.0`. Composer reads it to decide what `dev-main` is, so a stale one
+     * puts the development branch in a range nobody asked for, and does it quietly.
+     */
+    public function aBranchAliasWhichDoesNotMatchTheTagsIsFound()
+    {
+        $here = new Package(dirname(__DIR__, 2));
+
+        $this->assertEqual->equal(0, $this->failures($this->manifest()->run($here)));
+    }
 }

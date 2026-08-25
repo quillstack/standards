@@ -65,10 +65,14 @@ README from what it printed. If a snippet cannot be run, it does not go in.
         "test:coverage": "phpdbg -qrr ./vendor/bin/unit-tests",
         "stan": "phpstan analyse"
     },
-    "extra": {"branch-alias": {"dev-main": "0.6.x-dev"}}
+    "extra": {"branch-alias": {"dev-main": "<line>.x-dev"}}
 }
 ```
 
+- `branch-alias` names the line the tags are on, and **moves when the line does**. Fifteen
+  packages once carried `0.6.x-dev` while their tags had reached `0.13.0`: Composer reads the
+  alias to decide what `dev-main` is, so a stale one puts the development branch in a range
+  nobody asked for, and does it silently. Bumping a minor means bumping this in the same commit.
 - `homepage` points at the **package's own documentation page**, never the site root.
 - Dependencies on other Quillstack packages use a minor constraint with a floor: `^0.7.1`.
   Raising a floor is not a breaking change and does not cascade.
