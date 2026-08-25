@@ -175,20 +175,29 @@ curl -s -o /dev/null -w "%{http_code}\n" -L "<badge url>"
 Where other people solve the same problem, measure against them. A benchmark without these is
 not evidence:
 
-- **Name the exact versions of everything compared**, including PHP. Read them from
-  `composer.lock`, never from memory:
+- **Name the exact versions of everything compared**, including the language's. Read them from
+  the lock file, never from memory:
   ```shell
+  # PHP
   composer show --locked --format=json | python3 -c "import json,sys; [print(f\"{p['name']} {p['version']}\") for p in json.load(sys.stdin)['locked']]"
+  # Python
+  uv run python -c "import importlib.metadata as m; [print(p, m.version(p)) for p in ('a', 'b')]"
   ```
-- **Use `quillstack/benchmark`**, not a hand-rolled loop.
 - **Interleave the runs** — measure A, B, C, A, B, C rather than all of A then all of B, so a
   busy machine does not become a result. Report a median of at least three.
-- **Say what is being measured.** `benchmark:console`'s `Took` and `calls per second` include
-  process start-up, which is identical for everybody; the column that means anything is
-  `avg call time`, which is what the measured script reports about itself.
-- **Say what the other libraries do that this one does not.** Being faster because you do less
-  is not being faster. If the comparison is not like-for-like, the table says so, above the
-  numbers rather than below them.
+- **Measure both the part and the whole.** A per-call figure with the loading amortised away
+  says how expensive the work is; a whole-process figure says what somebody actually pays. They
+  can differ by a factor of ten and point at different answers. Give both, with a line for the
+  bare interpreter doing nothing, so a reader can see how much of the wait is the language
+  starting rather than anything either library did.
+- **Say what the other libraries do that this one does not**, above the numbers rather than
+  below them. Being faster because you do less is not being faster.
+
+There is no Quillstack benchmarking library for Python and there should not be. `timeit` and
+`pytest-benchmark` are there, they are what a Python developer already reaches for, and writing
+a third would be reinventing them worse. `quillstack/benchmark` exists in PHP because it wraps
+shell scripts which time HTTP requests and whole commands — a thing PHP had no answer for. What
+carries across languages is the method above, not a package.
 
 ## 6. GitHub repository metadata
 
