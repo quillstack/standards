@@ -72,13 +72,14 @@
     "repository": {
         "scope": "universal",
         "descriptionMatchesManifest": true,
-        "homepage": "https://quillstack.org/packages/{name}",
+        "homepage": "https://quillstack.org/{language}/packages/{name}",
         "topics": {
             "minimum": 5,
             "mustInclude": [
                 "quillstack"
             ]
-        }
+        },
+        "note": "The address carries the language. `/packages/<name>` was PHP's before there was a second language and is kept, because it is in the metadata of released packages and a redirect is a promise you keep for ever; PHP's checker fills `{language}` with nothing and Python's with `python`."
     },
     "ci": {
         "scope": "universal",
@@ -130,7 +131,8 @@
         "minimumVersion": "8.1",
         "badges": [
             "styleci"
-        ]
+        ],
+        "homepage": "https://quillstack.org/packages/{name}"
     },
     "python": {
         "scope": "python",
@@ -151,6 +153,7 @@
             "LICENSE",
             "py.typed"
         ],
-        "requiredScripts": []
+        "requiredScripts": [],
+        "homepage": "https://quillstack.org/python/packages/{name}"
     }
 }

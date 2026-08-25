@@ -56,7 +56,10 @@ final class Standard
                 $online
             ),
             new Manifest(
-                $this->string('repository.homepage'),
+                // PHP's address predates there being a second language, and is kept: it is in
+                // the metadata of released packages, and a redirect is a promise you keep for
+                // ever.
+                $this->string('php.homepage'),
                 $this->strings('php.requiredScripts'),
                 (bool) $this->at('php.branchAlias', true),
                 $this->strings('php.files')
