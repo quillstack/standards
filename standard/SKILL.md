@@ -270,8 +270,15 @@ gh api -X POST "repos/quillstack/<name>/hooks/<id>/deliveries/<delivery>/attempt
 
 ### A brand-new SonarCloud project
 
-Two things go wrong the first time, and both look like something is misconfigured when nothing
-is:
+Three things go wrong the first time, and they look like something is misconfigured when
+nothing is:
+
+- **A new organisation makes its projects private.** The analysis succeeds, the log prints
+  `ANALYSIS SUCCESSFUL` with a dashboard link, and every badge answers `not found` — because a
+  private project shows nothing to anybody not logged in. Set the organisation's default
+  visibility to public before the first package, or every one after it walks into the same
+  thing. Visible without a token is the test:
+  `curl -s "https://sonarcloud.io/api/components/show?component=<key>"`.
 
 - **The main branch may be called `master`.** SonarCloud picks a name when it creates the
   project, and the badge reads whatever it decided is main — so an analysed `main` sits beside
