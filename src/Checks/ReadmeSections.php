@@ -57,7 +57,9 @@ final class ReadmeSections implements Check
             $deeper[] = trim($heading);
         }
 
-        $findings = $this->missing($found, $deeper, $package->manifest()['type'] ?? 'library');
+        $type = $package->manifest()['type'] ?? null;
+
+        $findings = $this->missing($found, $deeper, is_string($type) ? $type : 'library');
         $findings = array_merge($findings, $this->outOfOrder($found));
 
         if (!preg_match('/^#\s+\S/m', $readme)) {

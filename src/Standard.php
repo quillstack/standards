@@ -90,7 +90,7 @@ final class Standard
             $alternatives = is_array($section['satisfiedBy'] ?? null) ? $section['satisfiedBy'] : [];
 
             foreach ($alternatives as $type => $title) {
-                if (is_string($type) && is_string($title)) {
+                if (is_string($title)) {
                     $satisfiedBy[$type] = $title;
                 }
             }
