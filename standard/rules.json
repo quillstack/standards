@@ -14,11 +14,17 @@
             },
             {
                 "title": "Installation",
-                "required": true
+                "required": true,
+                "satisfiedBy": {
+                    "project": "Getting started"
+                }
             },
             {
                 "title": "Usage",
-                "required": true
+                "required": true,
+                "satisfiedBy": {
+                    "project": "Getting started"
+                }
             },
             {
                 "title": "Benchmark",
@@ -42,7 +48,8 @@
         "rendering": {
             "noInlineBeforeLinkAcrossLineBreak": true,
             "note": "An inline element at the end of a line with a link starting the next renders with the space between them missing: `**with**` and `[a link]` come out as `witha link`."
-        }
+        },
+        "about": ""
     },
     "badges": {
         "scope": "universal",

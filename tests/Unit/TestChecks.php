@@ -73,6 +73,35 @@ class TestChecks
         $this->assertBoolean->isTrue(str_contains($findings[0]->message, 'sub-heading'));
     }
 
+    /**
+     * A starter skeleton merges `Installation` and `Usage` into `Getting started`, which reads
+     * better than splitting them for a project that is already the project. The alternative
+     * counts only for a `project`, so a library cannot reach for it.
+     */
+    public function aProjectSkeletonMaySayGettingStartedInstead()
+    {
+        $sections = [
+            ['title' => 'Installation', 'required' => true, 'satisfiedBy' => ['project' => 'Getting started']],
+            ['title' => 'Usage', 'required' => true, 'satisfiedBy' => ['project' => 'Getting started']],
+        ];
+
+        $findings = (new ReadmeSections($sections, true))->run($this->fixture('skeleton'));
+
+        $this->assertEqual->equal(0, $this->failures($findings));
+    }
+
+    public function aLibraryMayNot()
+    {
+        $sections = [
+            ['title' => 'Installation', 'required' => true, 'satisfiedBy' => ['project' => 'Getting started']],
+        ];
+
+        // The very same README, differing only in the type its manifest declares.
+        $findings = (new ReadmeSections($sections, true))->run($this->fixture('skeleton-as-library'));
+
+        $this->assertEqual->equal(1, $this->failures($findings));
+    }
+
     public function anActionPinnedToATagIsFound()
     {
         $findings = (new PinnedActions())->run($this->fixture('bad'));

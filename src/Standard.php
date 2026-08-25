@@ -84,7 +84,22 @@ final class Standard
                 continue;
             }
 
-            $sections[] = ['title' => $section['title'], 'required' => (bool) ($section['required'] ?? false)];
+            $satisfiedBy = [];
+
+            /** @var array<string, mixed> $alternatives */
+            $alternatives = is_array($section['satisfiedBy'] ?? null) ? $section['satisfiedBy'] : [];
+
+            foreach ($alternatives as $type => $title) {
+                if (is_string($type) && is_string($title)) {
+                    $satisfiedBy[$type] = $title;
+                }
+            }
+
+            $sections[] = [
+                'title' => $section['title'],
+                'required' => (bool) ($section['required'] ?? false),
+                'satisfiedBy' => $satisfiedBy,
+            ];
         }
 
         return $sections;

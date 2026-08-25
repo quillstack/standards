@@ -14,7 +14,7 @@ use Quillstack\Standards\Package;
 final class ReadmeSections implements Check
 {
     /**
-     * @param array<int, array{title: string, required: bool}> $sections
+     * @param array<int, array{title: string, required: bool, satisfiedBy?: array<string, string>}> $sections
      */
     public function __construct(private readonly array $sections, private readonly bool $ordered)
     {
@@ -57,7 +57,7 @@ final class ReadmeSections implements Check
             $deeper[] = trim($heading);
         }
 
-        $findings = $this->missing($found, $deeper);
+        $findings = $this->missing($found, $deeper, $package->manifest()['type'] ?? 'library');
         $findings = array_merge($findings, $this->outOfOrder($found));
 
         if (!preg_match('/^#\s+\S/m', $readme)) {
@@ -78,12 +78,21 @@ final class ReadmeSections implements Check
      *
      * @return Finding[]
      */
-    private function missing(array $found, array $deeper): array
+    private function missing(array $found, array $deeper, string $type): array
     {
         $findings = [];
 
         foreach ($this->sections as $section) {
             if (!$section['required'] || in_array($section['title'], $found, true)) {
+                continue;
+            }
+
+            // A starter skeleton is not a library: there is nothing to add to a project which
+            // is already the project, so `Installation` and `Usage` are one thing there and
+            // splitting them would make the README worse to read, not more uniform.
+            $instead = $section['satisfiedBy'][$type] ?? null;
+
+            if ($instead !== null && in_array($instead, $found, true)) {
                 continue;
             }
 

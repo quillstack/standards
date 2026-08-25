@@ -117,6 +117,11 @@ In this order. Do not add sections between them; do add sub-sections inside them
 11. **The rest of Quillstack** — one line plus links to 3–5 related packages
 12. **License** — MIT, linking the LICENSE file on GitHub
 
+A starter skeleton — anything whose manifest says `type: project` — merges 6 and 7 into a single
+**Getting started**. There is nothing to add to a project which already is the project, and
+splitting the two there makes the README worse to read rather than more uniform. This is the one
+place the section list bends, and only for that type.
+
 Cross-links between packages use their GitHub URLs in the README; the documentation site
 rewrites them to `/packages/<name>` at build time.
 
